@@ -1,0 +1,75 @@
+SELECT 
+    name 
+FROM 
+    Squads
+WHERE 
+    leader_id IS NULL;
+
+
+SELECT 
+    name
+FROM 
+    Dwarves
+WHERE 
+    profession = 'Warrior' AND age > 150;
+
+
+SELECT 
+    D.name AS DwarfName
+FROM 
+    Dwarves D
+INNER JOIN 
+    Items I
+ON 
+    D.dwarf_id = I.owner_id
+WHERE
+    I.type = "weapon" 
+GROUP BY 
+    D.name;
+
+
+SELECT
+    D.Name AS DwarfName, 
+    T.status AS TaskStatus,
+    COUNT(T.task_id) AS TaskCount
+FROM
+    Dwarves D
+JOIN
+    Tasks T
+ON
+    D.dwarf_id = T.assigned_to
+GROUP BY
+    D.name,
+    T.status;
+
+
+SELECT
+    D.Name AS DwarfName, 
+    T.description AS TaskDescription
+FROM
+    Dwarves D
+JOIN
+    Squads S
+ON
+JOIN
+    Tasks T
+ON
+    D.dwarf_id = T.assigned_to;
+WHERE
+    D.squad_id IN (SELECT squad_id FROM Squads WHERE name = "Guardians");
+
+
+SELECT
+    D.name AS DwarfName,
+    R.relationship AS Relationship,
+    CR.name AS CloseRelativeName
+FROM
+    Dwarves D
+JOIN
+    Relationships R
+ON
+    D.dwarf_id = R.dwarf_id
+JOIN
+    Dwarves CR
+ON
+    CR.dwarf_id = R.related_to;
